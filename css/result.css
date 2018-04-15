@@ -1,0 +1,73 @@
+html,body{height: 100%;}
+.bg-img{background-image:url(../img/bg.png);background-size:100% 100%;background-attachment:fixed;}
+img{width: 100%;height: 100%;display: block;}
+.s-img{height: 0.8rem;width: 0.8rem;}
+.s-img img{border-radius: 10px;}
+.start{background: #FFFFFF;
+	width: 90%;
+	display: flex;
+	align-items: center;
+	border-radius: 10px;
+	padding: 0.27rem;
+	top:0.13rem}
+.start .reply{width: 1.33rem;
+	height: 0.693rem;
+	background: #00CC47;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	right: 0.27rem;}
+#result{
+	display: flex;
+	justify-content: center;
+}
+#result .line{height: 1.6rem;width: 2px;background: #000000;opacity: 0.1;}
+.doctor{
+	width: 94%;
+	height: 2.1rem;
+	background: #FFFFFF;
+	display: flex;
+	border-radius: 10px;
+	align-items: center;
+	padding: 0.27rem;
+	margin: .4rem 0.54rem;
+}
+.doctor .doctor-img{width: 1.6rem;height: 1.6rem;margin-right: .3rem;}
+.doctor .doctor-img img{border-radius: 50%;}
+.doctor .doctor-info{margin-left: .3rem;}
+
+.reason{
+	display: flex;
+	justify-content: center;
+}
+.reason .reason-info{
+	width: 94%;
+	background: #FFFFFF;
+	border-radius: 10px;
+	align-items: center;
+	margin: 0 0.54rem;
+}
+.reason-img{width: 0.53rem;height: 0.53rem;}
+.reason-info-title{display: flex;padding: .48rem .27rem}
+.reason-img-title{font-size: 0.4rem;
+	color: #ED681F;
+	letter-spacing: 0;}
+.res1 .res1-title{font-size: 0.4rem;opacity: 0.8;color: #000000;letter-spacing: 0;}
+.res1 .project{font-size: 0.347rem;color: #FF4E00;}
+.res1-con{
+	opacity: 0.4;
+	font-family: NotoSansHans-Regular;
+	color: #000000;
+	letter-spacing: 0;
+	line-height: 0.53rem;	
+}
+.info{margin: .533rem auto;display: flex;justify-content: center;color: #000000;opacity: 0.8;font-size: 0.29rem;}
+.read{bottom: .267rem;right: .267rem;background: #FEB02F;border-radius: 2px;color: #FFFFFF;padding: .107rem .267rem;}
+.point {
+    width: .13rem;
+    height: .53rem;
+    background-color: #FF8F66;
+    display: block;
+    border-radius: 2px;
+}

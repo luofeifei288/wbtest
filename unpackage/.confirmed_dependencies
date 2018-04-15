@@ -1,0 +1,18 @@
+{
+  "page/floorPage.html": {
+    "refer": [
+      "page/result.html"
+    ]
+  },
+  "page/result.html": {
+    "refer": [
+      "page/floorPage.html"
+    ]
+  },
+  "index.html": {
+    "refer": [
+      "page/floorPage.html",
+      "page/message.html"
+    ]
+  }
+}

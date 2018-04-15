@@ -1,0 +1,94 @@
+body{background: #F2F2F2;}
+img{width: 100%;height: 100%;}
+header{height: 1.173rem;background: #FFFFFF;display: flex;align-items:center;padding-left: .4rem;}
+header h1{opacity: 0.7;
+	font-size: 0.453rem;
+	color: #000000;
+	letter-spacing: 1.42px;
+	text-align: center;
+	padding-left: 2.12rem;}
+.black-index{opacity: 0.5;
+	font-size: .373rem;
+	color: #000000;
+	letter-spacing: 0;
+	display: flex;}
+.banner-img{height: 3.75rem;}
+.info-con{margin: .4rem;}
+.info-con-title{
+	padding: .4rem;
+	background: #FFFFFF;
+}
+.info-con-title>p{font-size: .64rem;
+	color: #000000;
+	letter-spacing: 0;
+	text-align: justify;
+	line-height: .88rem}
+.info-con-title>span{opacity: 0.5;
+	font-family: NotoSansHans-Regular;
+	font-size: .347rem;
+	color: #000000;
+	display: block;
+	margin: .2rem 0;}
+.info-con-text,.bg-img-text{opacity: 0.6;
+	text-indent: .6rem;
+	font-size: .373rem;
+	color: #000000;
+	line-height: .667rem;}
+.info-con .bg-img{height: 2.14rem;background: #D7D7D7;margin: .53rem 0;}
+.bottom{height: 1.067rem;
+	position: fixed;
+	bottom: 0;
+	background: rgba(0,0,0,0.4);
+	width: 100%;}
+.bottom .bottom-img{width: .8rem;height: .8rem;}
+.bottom .bottom-img img{border-radius: 50%;}
+.bottom .hel{font-size: .347rem;
+	color: #FFFFFF;
+	text-align: center;}
+.bottom .hf{background: #F13B3B;
+	border-radius: 4px;
+	font-size: .347rem;
+	color: #FFFFFF;
+	padding: .106rem .32rem;
+	right: .4rem;}
+.doctor-list .doctor-img{width: 1.6rem;height: 1.6rem;margin-right: .3rem;}
+.doctor-list .doctor-img img{border-radius: 50%;}
+.doctor-list .doctor{padding: 0.27rem;background: #FFFFFF;margin-bottom: .266rem;}
+.doctor-list .doctor .doctor-info{margin-left: .3rem;}
+.doctor-list .doctor .line{height: 1.6rem;}
+.read {
+    bottom: .267rem;
+    right: .267rem;
+    background: #FEB02F;
+    border-radius: 2px;
+    color: #FFFFFF;
+    padding: .107rem .267rem;
+}
+.point {
+    width: .13rem;
+    height: .53rem;
+    background-color: #FF8F66;
+    display: block;
+    border-radius: 2px;
+}
+.res-question{
+	background: #FFFFFF;
+}
+.res1 .res1-title {
+    font-size: 0.4rem;
+    opacity: 0.8;
+    color: #000000;
+    letter-spacing: 0;
+}
+.res1-con {
+    opacity: 0.4;
+    font-family: NotoSansHans-Regular;
+    color: #000000;
+    letter-spacing: 0;
+    line-height: 0.53rem;
+    text-indent: .6rem;
+}
+.res1 .project {
+    font-size: 0.347rem;
+    color: #FF4E00;
+}
