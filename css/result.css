@@ -1,5 +1,7 @@
+html{height: 100%;}
 .bg-img{background-image:url(../img/bg.png);background-attachment:fixed;}
 img{width: 100%;height: 100%;display: block;}
+#resultbox{height: 100%;}
 .s-img{height: 0.8rem;width: 0.8rem;}
 .s-img img{border-radius: 10px;}
 .start{background: #FFFFFF;
