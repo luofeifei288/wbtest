@@ -97,6 +97,32 @@ img{width: 100%;height: 100%;}
 	display: block;
 	cursor: pointer;				
 }
+.question .moresel{
+	/*width: 84%;*/
+	opacity: 0.8;
+	background: #FFFFFF;
+	/*box-shadow: 0 2px 5px 0 rgba(175,0,0,0.20);*/
+	border-radius: 6px;
+	margin: 0 auto;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;		
+}
+.question .moresel label{
+	background: #FFFFFF;
+	border: 1px solid #FF8C52;
+	border-radius: 100px;
+	opacity: 0.8;
+	font-size: 0.373rem;
+	color: #000000;
+	text-align: center;	
+	padding: .266rem 0.28rem;
+	display: block;
+	cursor: pointer;				
+}
+.moresel label:nth-child(n+2){
+	margin-top: .266rem;
+}
 .question .checkbox label{
 	text-align: inherit !important;
     display: flex;
@@ -111,11 +137,11 @@ img{width: 100%;height: 100%;}
 	width: 90%;
 	display: flex;align-items: center;justify-content: center;
 	height: 1.3rem;
-	opacity: 0.8;
-	border-radius: 1em;
+	border-radius: 100px;
 	border: 1px solid #FF8C52;
 	color: #000000;
 	font-size: 0.4rem;
+	margin: 0 auto;
 }
 
 /*新增*/
@@ -185,7 +211,8 @@ input[type="checkbox"]:checked {
 	border-radius: 2.67rem;
 	border: 1px solid #FF8C52;
 	color: #000000;
-	font-size: 0.4rem;	
+	font-size: 0.4rem;
+	margin: 0 auto;	
 }
 .checkbox input[type="checkbox"]{
 	margin-left: .4rem;
@@ -208,4 +235,7 @@ input[type="checkbox"]:checked {
 #questionlist{
 	margin-top: -1.8rem;
     position: relative;
+}
+#qqq1{
+	display: block !important;
 }

@@ -20,16 +20,13 @@ $(document).ready(function(){
 		var len = text.visualLength();
 		subW = subW - len - theValue * 2;
 		var isclose = $(sub).data('state');
-		// console.log(ev.currentTarget.data-index)
 		var mgr = 2;
 		if(subW <= 0){
 			subW = 0;
 			mgr = 0;
 		}
-
 		if(isclose){
-			$(sub).animate({
-				
+			$(sub).animate({		
 			    'margin-left': subW + 'px',
 			    'margin-right': mgr + 'em',
 			    'height': '2em'
@@ -42,12 +39,12 @@ $(document).ready(function(){
 				if($(sub).attr('tag')=='more'){
 					$(sub + " .myanswer-wrap").text(floorPage.config.check.toString());
 					$(sub + " .subject-title").hide();
+					$(sub + " .moresel").hide();
 					if(floorPage.config.check.toString() == ""){
 						$(sub + " .myanswer-wrap").text("不知道");
 					}
 				}
 				fn();
-//				alert($('.a').offset().top)
 			});
 			$(sub + " .res").animate({
 				opacity: 0
@@ -55,8 +52,7 @@ $(document).ready(function(){
 			$(sub).data('state', false);
 			
 		}else{
-			$(sub).animate({
-				
+			$(sub).animate({			
 			    'margin-left':'0',
 			    'margin-right':'0',
 			    'height': subH + 'px'
@@ -64,6 +60,7 @@ $(document).ready(function(){
 				$(sub).height("auto");
 				$(sub).removeClass("answer-complete-wrap");
 				$(sub + " .res").show();
+				$(sub + " .moresel").show();
 				$(sub + " .myanswer-wrap").hide();
 				$(sub + " .myanswer-wrap").text('');
 				if($(sub).attr('tag')=='more'){
@@ -83,11 +80,6 @@ $(document).ready(function(){
 		var fz = $(".subject[data-index="+index+"]").css("font-size");
 		var reg = new RegExp("px","g");
 	    var theValue = fz.replace(reg, "");
-	    
-//		$(document).on('click', '.subject label', function(ev){
-//			shrink($(this).data('index'), subH, subW, theValue);
-//		});
-//		shrink(index, subH, subW, theValue);
 		$.fn.obj = {
 //			'subH': subH,
 			'subW': subW,
@@ -116,150 +108,108 @@ $(document).ready(function(){
 	}
 	
 	var que = new ArrayQueue();
-	
-//	floorPage.selques()
+
 	var floorPage={
 		config:{
-			'value1':null,    //question1
-			'value2':null,
-			'value3':null,
-			'check':[]
+			'radio':{},
+			'check':[],
+			'duoxuan':{}
 		},
+		//选项单击事件
 		evt:function(){
-			$(document).on('click','.qqq1 .res label, .qqq1 .myanswer-wrap',function(e){
-				
-				floorPage.config.value1=$(this).text()   //选择
-				$(this).addClass("active").siblings().removeClass("active");	
-				if($('.qqq1 .subject').attr('onechance') == "true") {
-					$('.qqq1 .subject').attr('onechance', false);
-					$('.qqq1 .subject').attr('data-height', $('.qqq1 .subject').innerHeight());
-				}
-	//	   		
-				$('.qqq1 .myanswer-wrap').removeClass('active');
-				initData(1);
-				$('.qqq2').css('display', 'block');
-				if($('.qqq2 .subject').attr('onechance') == "true") {
-					$('.qqq2').css('visibility','hidden');
-				}
-				
-				shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
-					setTimeout(function(){
-						$('.qqq2').css('visibility','visible');
-						getHeight('.qqq2');
-						scrollToEnd();
-					},700);
-				});
+			//单击事件
+			$.getJSON("../public/js/question.json",function(data){
+				$.each(data,function(i){
+					var name=i.split(',')
+					var nub=parseInt(name[3])
+					if(name[2]=='ox'){  //单选
+						(function(nub){
+							$(document).on('click','#qqq'+nub+' .res label, #qqq'+nub+' .myanswer-wrap',function(e){
+								floorPage.config.radio[nub]=$(this).text()
+								console.log(floorPage.config.radio)
+								var nid=$(this).parents('#qqq'+nub+'')   //获取当前问题ID
+								$(this).addClass("active").siblings().removeClass("active");
+								if($('#qqq'+nub+' .subject').attr('onechance') == "true") {
+									$('#qqq'+nub+' .subject').attr('onechance', false);
+									$('#qqq'+nub+' .subject').attr('data-height', $('#qqq'+nub+' .subject').innerHeight());
+								}
+								$('#qqq'+nub+' .myanswer-wrap').removeClass('active');
+								initData(nub);
+								$(nid).next().css('display','block !important')  //显示下一个问题
+								if($('#qqq'+(nub+1)+' .subject').attr('onechance') == "true") {
+									$('#qqq'+(nub+1)+'').css('visibility','hidden');
+								}
+								shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
+									setTimeout(function(){
+										$('#qqq'+(nub+1)+'').css('visibility','visible');
+										getHeight('#qqq'+(nub+1)+'');
+										scrollToEnd();
+									},700);
+								});					
+							})
+						})(nub);							
+					}
+					if(name[2]=='mx'){   //多选
+						(function(nub){
+							$(document).on('click','.check-btn, #qqq'+nub+' .myanswer-wrap',function(e){
+								var arr=[]
+							    $('input[name="vehicle"]:checked').each(function(){							    	
+							    	arr.push($(this).next().text())								
+							    });
+							    floorPage.config.duoxuan[nub]=arr
+							    console.log(floorPage.config.duoxuan)
+								var nid=$(this).parents('#qqq'+nub+'')   //获取当前问题ID
+								if($('#qqq'+nub+' .subject').attr('onechance') == "true") {
+									$('#qqq'+nub+' .subject').attr('onechance', false);
+									$('#qqq'+nub+' .subject').attr('data-height', $('#qqq'+nub+' .subject').innerHeight());
+								}
+								$('#qqq'+nub+' .myanswer-wrap').removeClass('active');
+								initData(nub);
+								$(nid).next().css('display','block !important')  //显示下一个问题
+								if($('#qqq'+(nub+1)+' .subject').attr('onechance') == "true") {
+									$('#qqq'+(nub+1)+'').css('visibility','hidden');
+								}
+								shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
+									setTimeout(function(){
+										$('#qqq'+(nub+1)+'').css('visibility','visible');
+										getHeight('#qqq'+(nub+1)+'');
+										scrollToEnd();
+									},700);
+								});					
+							})
+						})(nub);							
+					}						
+				})		
+			})			
+			$(document).on('click','.check-btn:last',function(){
+				setTimeout(function(){
+					$('.finish').removeClass('hide')
+				},1000)
 			})
-			$(document).on('click','.qqq2 .res label, .qqq2 .myanswer-wrap',function(e){
-				
-				floorPage.config.value2=$(this).text() 
-				$(this).addClass("active").siblings().removeClass("active");
-		   		
-	//	   		$('html,body').animate({scrollTop:$('.a').offset().top}, 'slow');
-				$('.qqq2 .myanswer-wrap').removeClass('active');
-				initData(2);
-				$('.qqq3').css('display','block')
-				if($('.qqq3 .subject').attr('onechance') == 'true'){
-					$('.qqq3').css('visibility','hidden');
-				}
-				shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
-					setTimeout(function() {
-						$('.qqq3').css('visibility','visible');
-			   			getHeight('.qqq3');
-			   			scrollToEnd();
-					}, 700);
-				});
-			})
-			$(document).on('click','.qqq3 .res label, .qqq3 .myanswer-wrap',function(e){
-				floorPage.config.value3=$(this).text() 
-				$(this).addClass("active").siblings().removeClass("active");
-	//	   		$('html,body').animate({scrollTop:$('.a').offset().top}, 'slow');
-				$('.qqq3 .myanswer-wrap').removeClass('active');
-				initData(3);
-				$('.qqq4').css('display','block')
-				if($('.qqq4 .subject').attr('onechance') == 'true'){
-					$('.qqq4').css('visibility','hidden');
-				}
-				shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
-					setTimeout(function() {
-						$('.qqq4').css('visibility','visible');
-			   			getHeight('.qqq4');
-			   			scrollToEnd();
-		   			}, 700);
-				});
-			})
-			$(document).on('click','.check-btn, .qqq4 .myanswer-wrap',function(e){
-		   		initData(4);
-		   		$('#addHeight').height($('.qqq4 .subject').data('height'));
-		   		
-		   		shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
-		   			setTimeout(function() {
-//		   				$('#addHeight').hide();
-						$('#addHeight').animate({'height':0});
-		   				$('.finish').css('display','flex');
-		   			}, 700);
-		   		});
-	//	   		$('html,body').animate({scrollTop:$('.a').offset().top}, 'slow');
-//				console.log(floorPage.config.check.toString()+'1123123123')
-//				$(".qqq4 .myanswer-wrap").text(floorPage.config.check.toString());
-			})		
 			$(document).on('click','.finish button',function(){
 				window.location.href="result.html"
 			})				
 		},
 		selques:function(fn){
 			$.getJSON("../public/js/question.json",function(data){
-				for(var v in data){						
-					var name=v.split(',')
-					var html=""
-					if(name[1]=='sex'){
-						$('.qqq1 .ques-sel-key').text(name[0]);
-						for(var i=0,l=data[v].length;i<l;i++){
-							html+='<label>'+data[v][i]+'</label>'
-							$('.qqq1 .res').html(html)
-						}
-					}
-					if(name[1]=='age'){
-						$('.qqq2 .ques-sel-key').text(name[0]);
-						for(var i=0,l=data[v].length;i<l;i++){
-							$('.qqq2 .res').append('<label>'+data[v][i]+'</label>')
-						}
-					}
-					if(name[1]=='wa'){
-						$('.qqq3 .ques-sel-key').text(name[0]);
-						for(var i=0,l=data[v].length;i<l;i++){
-							$('.qqq3 .res').append('<label>'+data[v][i]+'</label>')
-						}
-					}
-					if(name[1]=='fan'){
-						$('.qqq4 .ques-sel-key').text(name[0]);
-						for(var i=0,l=data[v].length;i<l;i++){
-							html+='<label>'+
-									'<input type="checkbox" name="vehicle" value="Bike" />'+
-									'<span>'+data[v][i]+'</span>'+
-								   '</label>'
-							$('.qqq4 .res .checkbox-list').html(html)
-						}
-					}
-				}
+				selquestion(data)  //获取问题				
 				fn();
 			})
 		},
 		check:function(){
-			$(document).on('click','.checkbox input',function(){
+			$(document).on('click','.checkbox input',function(){				
 				floorPage.config.check=[]
 			    $('input[name="vehicle"]:checked').each(function(){
 			    	floorPage.config.check.push($(this).next().text());
-			    });			
+			    });	
 				if($('.checkbox input').is(':checked')){
 					$('.check-btn button').text("选好了")
 				}else{
 					$('.check-btn button').text("没有或不知道")
-				}			
+				}
 			})
 		}
-	}	
-	
+	}
 	floorPage.check()
 	que.push(floorPage.selques);
 	que.push(initData);
@@ -270,5 +220,5 @@ $(document).ready(function(){
 		initData(1);
 		var evt = que.pop();
 		evt();
-	});
+	});	
 })
