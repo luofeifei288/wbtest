@@ -8,12 +8,12 @@ $(document).ready(function(){
 	function scrollToEnd(){//滚动到底部
         $('html, body').animate({scrollTop: $(document).height() - $(window).height()}, 300); 
 	}
-	function shrink(index, subH, subW, theValue, fn){
+	function shrink(index, subH, subW, theValue, fn, mark){
 		var sub = ".subject[data-index="+index+"]";
 		var text = $(sub + " .res .active").text();
 		if($(sub).attr('tag')=='more'){
-			text = floorPage.config.check.toString();
-			if(floorPage.config.check.toString() == ""){
+			text = floorPage.config.duoxuan[mark].toString();
+			if(floorPage.config.duoxuan[mark].toString() == ""){
 				text = "不知道";
 			}
 		}
@@ -37,7 +37,7 @@ $(document).ready(function(){
 				$(sub + " .myanswer-wrap").show();
 				$(sub + " .myanswer-wrap").text($(sub + " .res .active").text());
 				if($(sub).attr('tag')=='more'){
-					$(sub + " .myanswer-wrap").text(floorPage.config.check.toString());
+					$(sub +" .myanswer-wrap").text(floorPage.config.duoxuan[mark].toString());
 					$(sub + " .subject-title").hide();
 					$(sub + " .moresel").hide();
 					if(floorPage.config.check.toString() == ""){
@@ -122,10 +122,11 @@ $(document).ready(function(){
 				$.each(data,function(i){
 					var name=i.split(',')
 					var nub=parseInt(name[3])
+					var mark=name[1]
 					if(name[2]=='ox'){  //单选
 						(function(nub){
 							$(document).on('click','#qqq'+nub+' .res label, #qqq'+nub+' .myanswer-wrap',function(e){
-								floorPage.config.radio[nub]=$(this).text()
+								floorPage.config.radio[mark]=$(this).text()
 								console.log(floorPage.config.radio)
 								var nid=$(this).parents('#qqq'+nub+'')   //获取当前问题ID
 								$(this).addClass("active").siblings().removeClass("active");
@@ -151,12 +152,13 @@ $(document).ready(function(){
 					}
 					if(name[2]=='mx'){   //多选
 						(function(nub){
-							$(document).on('click','.check-btn, #qqq'+nub+' .myanswer-wrap',function(e){
+							$(document).on('click','#qqq'+nub+' .check-btn, #qqq'+nub+' .myanswer-wrap',function(e){
 								var arr=[]
-							    $('input[name="vehicle"]:checked').each(function(){							    	
+								
+							    $('#qqq'+nub+' input[name="vehicle"]:checked').each(function(){			
 							    	arr.push($(this).next().text())								
 							    });
-							    floorPage.config.duoxuan[nub]=arr
+							    floorPage.config.duoxuan[mark]=arr
 							    console.log(floorPage.config.duoxuan)
 								var nid=$(this).parents('#qqq'+nub+'')   //获取当前问题ID
 								if($('#qqq'+nub+' .subject').attr('onechance') == "true") {
@@ -169,13 +171,14 @@ $(document).ready(function(){
 								if($('#qqq'+(nub+1)+' .subject').attr('onechance') == "true") {
 									$('#qqq'+(nub+1)+'').css('visibility','hidden');
 								}
+
 								shrink($(e.target).parents('.subject').data('index'), $(e.target).parents('.subject').data('height'), $.fn.obj.subW, $.fn.obj.theValue, function(){
 									setTimeout(function(){
 										$('#qqq'+(nub+1)+'').css('visibility','visible');
 										getHeight('#qqq'+(nub+1)+'');
 										scrollToEnd();
 									},700);
-								});					
+								}, mark);					
 							})
 						})(nub);							
 					}						
