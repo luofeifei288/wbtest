@@ -127,7 +127,8 @@ $(document).ready(function(){
 						(function(nub){
 							$(document).on('click','#qqq'+nub+' .res label, #qqq'+nub+' .myanswer-wrap',function(e){
 								floorPage.config.radio[mark]=$(this).text()
-								console.log(floorPage.config.radio)
+								//console.log(floorPage.config.radio)
+								localStorage[mark]=$(this).text()
 								var nid=$(this).parents('#qqq'+nub+'')   //获取当前问题ID
 								$(this).addClass("active").siblings().removeClass("active");
 								if($('#qqq'+nub+' .subject').attr('onechance') == "true") {
@@ -159,7 +160,8 @@ $(document).ready(function(){
 							    	arr.push($(this).next().text())								
 							    });
 							    floorPage.config.duoxuan[mark]=arr
-							    console.log(floorPage.config.duoxuan)
+							    localStorage[mark]=arr
+							    //console.log(floorPage.config.duoxuan)
 								var nid=$(this).parents('#qqq'+nub+'')   //获取当前问题ID
 								if($('#qqq'+nub+' .subject').attr('onechance') == "true") {
 									$('#qqq'+nub+' .subject').attr('onechance', false);
